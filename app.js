@@ -1,3 +1,5 @@
+const lyricsDiv = document.getElementById('songs-lyrics');
+
 const searchSong = () => {
     const searchText = document.getElementById('search-field').value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
@@ -7,6 +9,7 @@ const searchSong = () => {
 }
 
 const displaySongs = (songs) => {
+    lyricsDiv.innerHTML = "";
     const songConatainer = document.getElementById('song-container');
     songConatainer.innerHTML = "";
     songs.forEach(song => {
@@ -30,5 +33,14 @@ const displaySongs = (songs) => {
 }
 //
 const getLyric = (artist, title) => {
-    console.log(artist, title);
+    const url = `https://api.lyrics.ovh/v1/${artist}/${title}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayLyrics(data.lyrics))
+}
+
+const displayLyrics = (lyrics) => {
+    lyricsDiv.innerHTML = "";
+    lyricsDiv.innerText = lyrics;
+
 }
