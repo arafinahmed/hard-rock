@@ -1,11 +1,21 @@
 const lyricsDiv = document.getElementById('songs-lyrics');
 
-const searchSong = async() => {
+// const searchSong = async() => {
+//     const searchText = document.getElementById('search-field').value;
+//     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
+//     const  res = await fetch(url)
+//     const data = await res.json();
+//     displaySongs(data.data);
+// }
+const searchSong = () => {
     const searchText = document.getElementById('search-field').value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
-    const  res = await fetch(url)
-    const data = await res.json();
-    displaySongs(data.data);
+    console.log(url);
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displaySongs(data.data))
+    .catch(error => displayError("Something went wrong, please try"))
+    
 }
 
 const displaySongs = (songs) => {
@@ -43,4 +53,9 @@ const displayLyrics = (lyrics) => {
     lyricsDiv.innerHTML = "";
     lyricsDiv.innerText = lyrics;
 
+}
+
+const displayError = error => {
+    const errorTag = document.getElementById('error-message');
+    errorTag.innerText = error;
 }
