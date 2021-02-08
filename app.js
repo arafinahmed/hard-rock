@@ -1,22 +1,27 @@
 const lyricsDiv = document.getElementById('songs-lyrics');
 
-// const searchSong = async() => {
+const searchSong = async () => {
+    const searchText = document.getElementById('search-field').value;
+    try {
+        const url = `https://api.lyrics.ovh/suggest/${searchText}`;
+        const res = await fetch(url)
+        const data = await res.json();
+        displaySongs(data.data);
+    }
+    catch(e){
+        displayError("This is an error");
+    }
+}
+// const searchSong = () => {
 //     const searchText = document.getElementById('search-field').value;
 //     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
-//     const  res = await fetch(url)
-//     const data = await res.json();
-//     displaySongs(data.data);
+//     console.log(url);
+//     fetch(url)
+//     .then(res => res.json())
+//     .then(data => displaySongs(data.data))
+//     .catch(error => displayError("Something went wrong, please try"))
+
 // }
-const searchSong = () => {
-    const searchText = document.getElementById('search-field').value;
-    const url = `https://api.lyrics.ovh/suggest/${searchText}`;
-    console.log(url);
-    fetch(url)
-    .then(res => res.json())
-    .then(data => displaySongs(data.data))
-    .catch(error => displayError("Something went wrong, please try"))
-    
-}
 
 const displaySongs = (songs) => {
     lyricsDiv.innerHTML = "";
@@ -38,11 +43,11 @@ const displaySongs = (songs) => {
         </div>`;
         songConatainer.appendChild(div);
         console.log(song);
-        
+
     });
 }
 //
-const getLyric = async(artist, title) => {
+const getLyric = async (artist, title) => {
     const url = `https://api.lyrics.ovh/v1/${artist}/${title}`;
     const res = await fetch(url);
     const data = await res.json();
