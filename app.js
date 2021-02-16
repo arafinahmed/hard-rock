@@ -1,3 +1,12 @@
+const searchBtn = document.getElementById('search-button');
+const searchField = document.getElementById('search-field');
+
+searchField.addEventListener("keypress", function(event){
+    if(event.key=="Enter"){
+        event.preventDefault();
+        searchBtn.click();
+    }
+})
 const lyricsDiv = document.getElementById('songs-lyrics');
 
 const searchSong = async () => {
@@ -74,10 +83,8 @@ const displayError = error => {
 
 const toggle = (show) => {
     const spinner = document.getElementById('loading-spinner');
-    if(show){
-        spinner.classList.remove('d-none');
-    }
-    else{
-        spinner.classList.add('d-none');
-    }
+    const songs = document.getElementById('song-container');
+    spinner.classList.toggle('d-none');
+    songs.classList.toggle('d-none');
+
 }
